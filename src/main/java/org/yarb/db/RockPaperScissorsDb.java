@@ -3,13 +3,13 @@ package org.yarb.db;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Set;
 
 public class RockPaperScissorsDb {
 
@@ -30,6 +30,15 @@ public class RockPaperScissorsDb {
   public static final int WON = 1;
   public static final int LOST = -1;
   public static final int TIED = 0;
+  
+  public static final String INSERT_GAME_SQL
+      = "INSERT INTO " + TBLNAME + "("
+      + COL_SESHID + ","
+      + COL_GAME_DATE + ","
+      + COL_PLAYER_MOVE + ","
+      + COL_COMPUTER_MOVE + ","
+      + COL_WON + ")"
+      + " VALUES (?, ?, ?, ?, ?)";
 
   private Connection cxn;
   
@@ -140,6 +149,29 @@ public class RockPaperScissorsDb {
       playerMove = pmove;
       computerMove = cmove;
       won = wn;
+    }
+    
+    /**
+     * Save this game to the database.
+     */
+    public void save() {
+      try {
+        PreparedStatement stmt = cxn.prepareStatement(INSERT_GAME_SQL);
+        stmt.setString(1, seshid);
+        stmt.setDate(2, gameDate);
+        stmt.setString(3, playerMove);
+        stmt.setString(4, computerMove);
+        stmt.setInt(5, won);
+        
+        stmt.executeUpdate();
+        ResultSet rs = stmt.getGeneratedKeys();
+        if (rs.next()) {
+          id = rs.getInt(0);
+        }
+      } catch (SQLException ex) {
+        // TODO Auto-generated catch block
+        ex.printStackTrace();
+      }
     }
   }
 }
