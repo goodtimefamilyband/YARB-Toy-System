@@ -1,14 +1,8 @@
 package org.yarb.servlet;
-/**
-* set default mock parameter.
-* @param additionalParameters parameter additional
-* @return data manager
-* @throws Exception if has error
-*/
 
+/** import the used packeges.*/
 import java.io.IOException;
 import java.util.Random;
-import java.util.Scanner;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MainServlet extends HttpServlet {
 
-  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  protected void doGet(
+          HttpServletRequest request, 
+          HttpServletResponse response) 
+          throws ServletException, IOException {
     response.setContentType("text/html");
     response.setStatus(HttpServletResponse.SC_OK);
     response.getWriter().println("<h1>Hello Servlet</h1>");
@@ -32,11 +29,11 @@ public class MainServlet extends HttpServlet {
   }   
 
 
-
   public static void print(String text) {
     System.out.println(text);
   }
-  
+
+  /**Check if the input from the user is valid. */
   public static boolean isValid(String input) {
     if (input.equalsIgnoreCase("rock")) {
       return true;
@@ -51,6 +48,7 @@ public class MainServlet extends HttpServlet {
     return false;
   }
 
+  /**set the game function. */
   public static String game(String user) {
     String computer = computerResults();
     
@@ -67,6 +65,7 @@ public class MainServlet extends HttpServlet {
     }
   }
 
+  /**create a random option from the computer. */
   public static String computerResults() {
     String[] types = {"rock", "paper", "scissors"};
     Random rand = new Random();
@@ -75,6 +74,7 @@ public class MainServlet extends HttpServlet {
     return types[computerChoice];
   }
 
+  /**check who is the winner. */
   public static boolean checkWin(String user, String opponent) {
     if ((!isValid(user)) && (!isValid(opponent))) {
       return false;
