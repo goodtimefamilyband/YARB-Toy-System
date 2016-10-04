@@ -44,8 +44,9 @@ public class RockPaperScissorsDb {
   
   /**
    * Create the table.
+   * @throws SQLException 
    */
-  public void createTable() {
+  public void createTable() throws SQLException {
     StringBuilder sqlSb = new StringBuilder();
     sqlSb.append("CREATE TABLE IF NOT EXISTS " + TBLNAME + "(");
     Hashtable<String, String> colTbl = new Hashtable<>();
@@ -65,17 +66,26 @@ public class RockPaperScissorsDb {
       String val = colTbl.get(key);
       
       sqlSb.append(key + " " + val);
-      if (!keys.hasNext()) {
-        sqlSb.append(",");
+      if (keys.hasNext()) {
+        sqlSb.append(", ");
       }
     }
     
     sqlSb.append(")");
+    
+    Statement stmt = cxn.createStatement();
+    stmt.execute(sqlSb.toString());
   }
   
+  /**
+   * Default constructor.
+   * @throws ClassNotFoundException when the database driver is not loaded
+   * @throws SQLException when the database is unavailable
+   */
   public RockPaperScissorsDb() throws ClassNotFoundException, SQLException {
     Class.forName("org.sqlite.JDBC");
     cxn = DriverManager.getConnection("jdbc:sqlite:" + DBNAME);
+    createTable();
   }
   
   public Game createNewGame(String sid, java.util.Date dt, String pmove, String cmove, int wn) {
@@ -170,7 +180,7 @@ public class RockPaperScissorsDb {
         stmt.executeUpdate();
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
-          id = rs.getInt(0);
+          id = rs.getInt(1);
         }
       } catch (SQLException ex) {
         // TODO Auto-generated catch block
