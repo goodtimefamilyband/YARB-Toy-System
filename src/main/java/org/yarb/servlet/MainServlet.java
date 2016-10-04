@@ -5,6 +5,7 @@ package org.yarb.servlet;
 * @return data manager
 * @throws Exception if has error
 */
+
 import java.io.IOException;
 import java.util.Random;
 import java.util.Scanner;
@@ -66,21 +67,22 @@ public class MainServlet extends HttpServlet {
     }
   }
 
-
   public static String computerResults() {
-    String types[] = {"rock", "paper", "scissors"};
+    String[] types = {"rock", "paper", "scissors"};
     Random rand = new Random();
     int computerChoice = rand.nextInt(3);
     
     return types[computerChoice];
   }
-  
+
   public static boolean checkWin(String user, String opponent) {
     if ((!isValid(user)) && (!isValid(opponent))) {
       return false;
     }
-    
-    String rock = "rock", paper = "paper", scissors = "scissors";
+
+    String rock = "rock";
+    String paper = "paper"; 
+    String scissors = "scissors";
     
     if ((user.equalsIgnoreCase(rock)) && (opponent.equalsIgnoreCase(scissors))) {
       return true;
