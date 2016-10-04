@@ -78,6 +78,10 @@ public class RockPaperScissorsDb {
     cxn = DriverManager.getConnection("jdbc:sqlite:" + DBNAME);
   }
   
+  public Game createNewGame(String sid, java.util.Date dt, String pmove, String cmove, int wn) {
+    return new Game(sid, dt, pmove, cmove, wn);
+  }
+  
   /**
    * Get games played during a given session.
    * @param seshid The ID of the session
