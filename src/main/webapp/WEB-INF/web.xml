@@ -11,9 +11,20 @@
     <servlet-name>Hello</servlet-name>
     <servlet-class>org.yarb.servlet.MainServlet</servlet-class>
   </servlet>
+  
+  <servlet>
+    <servlet-name>Results</servlet-name>
+    <servlet-class>org.yarb.servlet.GamesList</servlet-class>
+  </servlet>
+  
   <servlet-mapping>
     <servlet-name>Hello</servlet-name>    <!-- XML -->
     <url-pattern>/hello/*</url-pattern> 
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>Results</servlet-name>    <!-- XML -->
+    <url-pattern>/results</url-pattern> 
   </servlet-mapping>
 
 </web-app>
