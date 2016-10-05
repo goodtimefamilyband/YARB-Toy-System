@@ -44,7 +44,7 @@ public class RockPaperScissorsDb {
   
   /**
    * Create the table.
-   * @throws SQLException 
+   * @throws SQLException if the database is unavailable
    */
   public void createTable() throws SQLException {
     StringBuilder sqlSb = new StringBuilder();
@@ -185,6 +185,23 @@ public class RockPaperScissorsDb {
       } catch (SQLException ex) {
         // TODO Auto-generated catch block
         ex.printStackTrace();
+      }
+    }
+    
+    /**
+     * Get a string showing the game result.
+     * @return "Won," "Lost,", or "Tied"
+     */
+    public String getResult() {
+      switch (won) {
+        case WON:
+          return "Won";
+        case LOST:
+          return "Lost";
+        case TIED:
+          return "Tied";
+        default:
+          return "";
       }
     }
   }
